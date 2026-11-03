@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Library Manager</title>
+<style>
+  :root { --bg:#f6f5f1; --ink:#1d2a35; --muted:#5d6b76; --line:#d9d6cc; --accent:#1f5f5b; --err:#a3302b; --card:#fff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161c20; --ink:#e8e6df; --muted:#9aa6ae; --line:#2e3a41; --accent:#5fb3ab; --err:#e07a72; --card:#1e262b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family: Georgia, "Times New Roman", serif; background:var(--bg); color:var(--ink); line-height:1.6; }
+  header { border-bottom:1px solid var(--line); background:var(--card); }
+  nav { max-width:880px; margin:0 auto; padding:14px 20px; display:flex; gap:22px; align-items:baseline; flex-wrap:wrap; }
+  nav .brand { font-size:1.25rem; font-weight:bold; margin-right:auto; }
+  nav a { color:var(--muted); text-decoration:none; font-family: system-ui, sans-serif; font-size:.95rem; }
+  nav a:hover, nav a:focus-visible { color:var(--accent); text-decoration:underline; }
+  main { max-width:880px; margin:0 auto; padding:24px 20px 60px; }
+  h1 { font-size:1.6rem; margin:.2em 0 .8em; }
+  .msg { padding:10px 14px; border-left:4px solid var(--accent); background:var(--card); margin-bottom:12px; font-family:system-ui,sans-serif; }
+  .msg.error { border-color:var(--err); }
+  form.inline { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px; font-family:system-ui,sans-serif; }
+  input, select, button { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:4px; background:var(--card); color:var(--ink); }
+  button { background:var(--accent); color:#fff; border-color:var(--accent); cursor:pointer; }
+  button.link { background:none; color:var(--err); border:none; padding:0; text-decoration:underline; }
+  .tablewrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-family:system-ui,sans-serif; font-size:.95rem; }
+  th, td { text-align:left; padding:9px 8px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:600; }
+  .stats { display:flex; gap:32px; flex-wrap:wrap; }
+  .stat b { display:block; font-size:2.6rem; line-height:1; }
+  .stat span { color:var(--muted); font-family:system-ui,sans-serif; }
+  .empty { color:var(--muted); font-family:system-ui,sans-serif; }
+</style>
+</head>
+<body>
+<header><nav>
+  <span class="brand">Library Manager</span>
+  <a href="{{ url_for('dashboard') }}">Dashboard</a>
+  <a href="{{ url_for('books') }}">Books</a>
+  <a href="{{ url_for('members') }}">Members</a>
+  <a href="{{ url_for('issues') }}">Issue &amp; return</a>
+</nav></header>
+<main>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for cat, m in messages %}<div class="msg {{ cat }}" role="status">{{ m }}</div>{% endfor %}
+{% endwith %}
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

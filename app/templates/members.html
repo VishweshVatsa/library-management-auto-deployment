@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Members</h1>
+<form class="inline" method="post">
+  <input name="name" placeholder="Full name" required aria-label="Full name">
+  <input name="email" type="email" placeholder="Email" required aria-label="Email">
+  <button type="submit">Add member</button>
+</form>
+{% if members %}
+<div class="tablewrap"><table>
+  <tr><th>Name</th><th>Email</th></tr>
+  {% for m in members %}<tr><td>{{ m.name }}</td><td>{{ m.email }}</td></tr>{% endfor %}
+</table></div>
+{% else %}<p class="empty">No members yet. Add the first one above.</p>{% endif %}
+{% endblock %}

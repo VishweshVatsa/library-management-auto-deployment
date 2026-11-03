@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Library overview</h1>
+<div class="stats">
+  <div class="stat"><b>{{ stats.books }}</b><span>Book titles</span></div>
+  <div class="stat"><b>{{ stats.members }}</b><span>Members</span></div>
+  <div class="stat"><b>{{ stats.issued }}</b><span>Books currently issued</span></div>
+</div>
+{% endblock %}

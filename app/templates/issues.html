@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Issue &amp; return</h1>
+<form class="inline" method="post">
+  <select name="book_id" required aria-label="Book">
+    <option value="">Choose a book</option>
+    {% for b in books %}<option value="{{ b.id }}">{{ b.title }} ({{ b.available }} left)</option>{% endfor %}
+  </select>
+  <select name="member_id" required aria-label="Member">
+    <option value="">Choose a member</option>
+    {% for m in members %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
+  </select>
+  <button type="submit">Issue book</button>
+</form>
+{% if issues %}
+<div class="tablewrap"><table>
+  <tr><th>Book</th><th>Member</th><th>Issued</th><th>Returned</th></tr>
+  {% for i in issues %}
+  <tr><td>{{ i.title }}</td><td>{{ i.name }}</td><td>{{ i.issue_date }}</td>
+  <td>{% if i.return_date %}{{ i.return_date }}{% else %}
+    <form method="post" action="{{ url_for('return_book', issue_id=i.id) }}"><button>Return</button></form>{% endif %}</td></tr>
+  {% endfor %}
+</table></div>
+{% else %}<p class="empty">Nothing issued yet.</p>{% endif %}
+{% endblock %}

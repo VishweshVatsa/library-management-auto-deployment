@@ -1,0 +1,14 @@
+services:
+  library:
+    image: ${DOCKERHUB_USERNAME:-local}/library-management:latest
+    build: .
+    ports:
+      - "80:5000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-change-me}
+    volumes:
+      - library-data:/data
+    restart: unless-stopped
+
+volumes:
+  library-data:
