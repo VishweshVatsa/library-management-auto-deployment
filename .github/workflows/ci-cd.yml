@@ -35,20 +35,3 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/library-management:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/library-management:${{ github.sha }}
 
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            mkdir -p ~/library && cd ~/library
-            export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
-            docker pull $DOCKERHUB_USERNAME/library-management:latest
-            docker rm -f library 2>/dev/null || true
-            docker run -d --name library --restart unless-stopped \
-              -p 80:5000 -v library-data:/data \
-              $DOCKERHUB_USERNAME/library-management:latest
